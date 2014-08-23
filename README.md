@@ -1,7 +1,8 @@
 Flask-RESTful Demo
 ======
 
-This is sample Flask application created to show off some of the features of the Flask-RESTful library.
+This is sample Flask application created to show off some of the features of
+the Flask-RESTful library.
 
 
 Getting Started
@@ -44,3 +45,20 @@ Run static analysis:
     $ make pylint
     $ make flake8
     $ make check  # includes all checks
+
+
+Resources
+---------
+
+That guy who wrote the O'Rielly book on Flask did a PyCon presentation. I got
+the `paginate` decorator from there:
+
+http://pyvideo.org/video/2668/writing-restful-web-services-with-flask
+
+Lots of examples of Flask "Best Practices":
+
+https://github.com/sloria/cookiecutter-flask
+
+What I based my sick makefile off of:
+
+https://github.com/jacebrowning/template-python
