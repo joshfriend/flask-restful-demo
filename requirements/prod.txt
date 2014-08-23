@@ -1,0 +1,20 @@
+# Everything needed in production
+
+wheel
+
+# Flask
+Flask
+Flask-RESTful
+
+# Database
+Flask-SQLAlchemy
+psycopg2
+
+# Migrations
+Flask-Migrate
+
+# Deployment
+gunicorn>=17.5
+
+# Auth
+Flask-HTTPAuth
