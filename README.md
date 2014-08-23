@@ -62,3 +62,7 @@ https://github.com/sloria/cookiecutter-flask
 What I based my sick makefile off of:
 
 https://github.com/jacebrowning/template-python
+
+The flask-restful docs:
+
+http://flask-restful.readthedocs.org/en/latest/
