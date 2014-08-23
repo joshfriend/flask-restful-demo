@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-from flask import abort, g
+from flask import abort
 from flask.ext.restful import Resource, reqparse, marshal_with, fields
 
 from demo.api import api, meta_fields
+from demo.api.auth import self_only
 from demo.models.task import Task
 from demo.models.user import User
 from demo.helpers import paginate
@@ -35,8 +36,13 @@ task_collection_fields = {
 
 
 class TaskResource(Resource):
+    decorators = [
+        auth.login_required,
+        self_only,
+    ]
+
     @marshal_with(task_fields)
-    def get(self, task_id=0):
+    def get(self, task_id=0, **kwargs):
         task = Task.get_by_id(task_id)
 
         if not task:
@@ -44,37 +50,32 @@ class TaskResource(Resource):
 
         return task
 
-    @auth.login_required
     @marshal_with(task_fields)
-    def post(self, task_id=0):
+    def post(self, task_id=0, **kwargs):
         task = Task.get_by_id(task_id)
 
         if not task:
             abort(404)
-
-        if task.user_id != g.user.id:
-            # Users can only modify their own tasks
-            abort(403)
 
         task.update(**task_parser.parse_args())
         return task
 
-    @auth.login_required
-    def delete(self, task_id=0):
+    def delete(self, task_id=0, **kwargs):
         task = Task.get_by_id(task_id)
 
         if not task:
             abort(404)
 
-        if task.user_id != g.user.id:
-            # Users can only delete their own tasks
-            abort(403)
-
         task.delete()
-        return {'message': 'deleted', 'status': 204}, 204
+        return 204
 
 
 class TaskCollectionResource(Resource):
+    decorators = [
+        auth.login_required,
+        self_only,
+    ]
+
     @marshal_with(task_collection_fields)
     @paginate()
     def get(self, user_id=0, username=''):
@@ -97,29 +98,16 @@ class TaskCollectionResource(Resource):
 
         return tasks
 
-    @auth.login_required
     @marshal_with(task_fields)
     def post(self, user_id=0, username=''):
-        # find the user that the new task will go with
-        if user_id:
-            user = User.get_by_id(user_id)
-        elif username:
-            user = User.get_by_username(username)
-
-        if not user:
-            abort(404)
-
-        if user.id != g.user.id:
-            # Users can only create tasks for themselves
-            abort(403)
-
         args = task_parser.parse_args()
         # user owns the task
-        args['user_id'] = user.id
+        args['user_id'] = user_id
         task = Task.create(**args)
         return task, 201
 
 
-api.add_resource(TaskResource, '/tasks/<int:task_id>')
+api.add_resource(TaskResource, '/users/<int:user_id>/tasks/<int:task_id>',
+                 '/users/<username>/tasks/<int:task_id>')
 api.add_resource(TaskCollectionResource, '/users/<int:user_id>/tasks',
                  '/users/<username>/tasks')

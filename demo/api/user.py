@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-from flask import abort
+from flask import abort, g
 from flask.ext.restful import Resource, reqparse, marshal_with, fields
 
 from demo.api import api, meta_fields
+from demo.api.auth import self_only
 from demo.models.user import User
 from demo.helpers import paginate
 from demo.extensions import auth
@@ -46,33 +47,18 @@ class UserResource(Resource):
 
         return user
 
+    @auth.login_required
+    @self_only
     @marshal_with(user_fields)
     def post(self, user_id=0, username=None):
-        user = None
-        if username:
-            user = User.get_by_username(username)
-        elif user_id:
-            user = User.get_by_id(user_id)
-
-        if not user:
-            abort(404)
-
-        user.update(**user_parser.parse_args())
-        return user
+        g.user.update(**user_parser.parse_args())
+        return g.user
 
     @auth.login_required
+    @self_only
     def delete(self, user_id=0, username=None):
-        user = None
-        if username:
-            user = User.get_by_username(username)
-        elif user_id:
-            user = User.get_by_id(user_id)
-
-        if not user:
-            abort(404)
-
-        user.delete()
-        return {'message': 'deleted', 'status': 204}, 204
+        g.user.delete()
+        return 204
 
 
 class UserCollectionResource(Resource):
