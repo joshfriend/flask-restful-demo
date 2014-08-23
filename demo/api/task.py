@@ -15,7 +15,7 @@ task_parser.add_argument('summary', type=str, required=True)
 task_parser.add_argument('description', type=str)
 
 task_collection_parser = reqparse.RequestParser()
-task_collection_parser.add_argument('complete', type=bool)
+task_collection_parser.add_argument('complete', type=int)
 
 
 # Marshaled field definitions for task objects
@@ -44,6 +44,7 @@ class TaskResource(Resource):
 
         return task
 
+    @auth.login_required
     @marshal_with(task_fields)
     def post(self, task_id=0):
         task = Task.get_by_id(task_id)
