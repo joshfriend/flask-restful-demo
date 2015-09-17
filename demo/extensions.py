@@ -12,3 +12,6 @@ migrate = Migrate()
 
 from flask.ext.httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
+
+from opbeat.contrib.flask import Opbeat
+opbeat = Opbeat()

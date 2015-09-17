@@ -15,6 +15,13 @@ class ProdConfig(Config):
     # DB URL variable set by heroku
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '')
 
+    OPBEAT = {
+        'ORGANIZATION_ID': os.getenv('OPBEAT_ORG_ID'),
+        'APP_ID': os.getenv('OPBEAT_APP_ID'),
+        'SECRET_TOKEN': os.getenv('OPBEAT_SECRET_KEY'),
+        'INCLUDE_PATHS': ['demo']
+    }
+
 
 class DevConfig(Config):
     """Development configuration."""
