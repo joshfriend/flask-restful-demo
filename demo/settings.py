@@ -18,8 +18,8 @@ class ProdConfig(Config):
     OPBEAT = {
         'ORGANIZATION_ID': os.getenv('OPBEAT_ORG_ID'),
         'APP_ID': os.getenv('OPBEAT_APP_ID'),
-        'SECRET_TOKEN': os.getenv('OPBEAT_SECRET_KEY'),
-        'INCLUDE_PATHS': ['demo']
+        'SECRET_TOKEN': os.getenv('OPBEAT_SECRET_TOKEN'),
+        'INCLUDE_PATHS': ['.']
     }
 
 
