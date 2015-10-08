@@ -6,10 +6,9 @@ from flask.ext.migrate import MigrateCommand
 
 from demo import create_app
 from demo.models.user import User
-from demo.settings import DevConfig, ProdConfig
 from demo.database import db
 
-app = create_app(DevConfig)
+app = create_app()
 
 manager = Manager(app)
 
