@@ -45,6 +45,7 @@ PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint
 PYTEST := "$(BIN)/py.test"
 COVERAGE := $(BIN)/coverage
+ACTIVATE := $(BIN)/activate
 
 # Flags for PHONY targets
 DEPENDS := $(ENV)/depends
@@ -114,7 +115,7 @@ tests: depends
 
 .PHONY: serve
 serve: depends
-	$(PYTHON) manage.py runserver
+	. $(ACTIVATE); $(BIN)/honcho start
 
 # Database Migrations ########################################################
 

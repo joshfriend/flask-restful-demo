@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
 '''The demo module, containing the app factory function.'''
+
+import os
+
 from flask import Flask
 
-from demo.settings import ProdConfig
+from demo.settings import ProdConfig, DevConfig
 from demo.extensions import (
     db,
     migrate,
@@ -11,15 +14,19 @@ from demo.extensions import (
 )
 from demo.api import api_blueprint
 
+if os.getenv("FLASK_ENV") == 'prod':
+    DefaultConfig = ProdConfig
+else:
+    DefaultConfig = DevConfig
 
-def create_app(config_object=ProdConfig):
+def create_app(config_object=DefaultConfig):
     '''An application factory, as explained here:
         http://flask.pocoo.org/docs/patterns/appfactories/
 
     :param config_object: The configuration object to use.
     '''
     app = Flask(__name__)
-    opbeaat.init_app(app)
+    opbeat.init_app(app)
     app.config.from_object(config_object)
     register_extensions(app)
     register_blueprints(app)
@@ -33,3 +40,4 @@ def register_extensions(app):
 
 def register_blueprints(app):
     app.register_blueprint(api_blueprint)
+

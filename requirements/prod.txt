@@ -5,6 +5,7 @@ wheel
 # Flask
 Flask
 Flask-RESTful
+blinker
 
 # Database
 Flask-SQLAlchemy

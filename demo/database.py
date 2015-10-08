@@ -62,6 +62,8 @@ class SurrogatePK(object):
 
     @classmethod
     def get_by_id(cls, id):
+        if id <= 0:
+            raise ValueError('ID must not be negative or zero!')
         if any(
             (isinstance(id, basestring) and id.isdigit(),
              isinstance(id, (int, float))),

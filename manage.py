@@ -9,10 +9,7 @@ from demo.models.user import User
 from demo.settings import DevConfig, ProdConfig
 from demo.database import db
 
-if os.environ.get("FLASK_ENV") == 'prod':
-    app = create_app(ProdConfig)
-else:
-    app = create_app(DevConfig)
+app = create_app(DevConfig)
 
 manager = Manager(app)
 

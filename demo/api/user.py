@@ -10,11 +10,11 @@ from demo.helpers import paginate
 from demo.extensions import auth
 
 user_parser = reqparse.RequestParser()
-user_parser.add_argument('username', type=str)
-user_parser.add_argument('password', type=str)
-user_parser.add_argument('email', type=str)
-user_parser.add_argument('first_name', type=str)
-user_parser.add_argument('last_name', type=str)
+user_parser.add_argument('username')
+user_parser.add_argument('password')
+user_parser.add_argument('email')
+user_parser.add_argument('first_name')
+user_parser.add_argument('last_name')
 
 
 # Marshaled field definitions for user objects
@@ -35,11 +35,11 @@ user_collection_fields = {
 
 class UserResource(Resource):
     @marshal_with(user_fields)
-    def get(self, user_id=0, username=None):
+    def get(self, user_id=None, username=None):
         user = None
-        if username:
+        if username is not None:
             user = User.get_by_username(username)
-        elif user_id:
+        elif user_id is not None:
             user = User.get_by_id(user_id)
 
         if not user:
@@ -50,13 +50,13 @@ class UserResource(Resource):
     @auth.login_required
     @self_only
     @marshal_with(user_fields)
-    def post(self, user_id=0, username=None):
+    def post(self, user_id=None, username=None):
         g.user.update(**user_parser.parse_args())
         return g.user
 
     @auth.login_required
     @self_only
-    def delete(self, user_id=0, username=None):
+    def delete(self, user_id=None, username=None):
         g.user.delete()
         return 204
 
