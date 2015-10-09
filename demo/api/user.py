@@ -39,7 +39,7 @@ class UserResource(Resource):
         user = None
         if username is not None:
             user = User.get_by_username(username)
-        elif user_id is not None:
+        else:
             user = User.get_by_id(user_id)
 
         if not user:

@@ -78,11 +78,12 @@ class TaskCollectionResource(Resource):
 
     @marshal_with(task_collection_fields)
     @paginate()
-    def get(self, user_id=0, username=''):
+    def get(self, user_id=None, username=None):
         # Find user that task goes with
+        user = None
         if user_id:
             user = User.get_by_id(user_id)
-        elif username:
+        else:
             user = User.get_by_username(username)
 
         if not user:
@@ -99,10 +100,10 @@ class TaskCollectionResource(Resource):
         return tasks
 
     @marshal_with(task_fields)
-    def post(self, user_id=0, username=''):
+    def post(self, user_id=None, username=None):
         args = task_parser.parse_args()
         # user owns the task
-        args['user_id'] = user_id
+        args['user_id'] = g.user.id
         task = Task.create(**args)
         return task, 201
 
