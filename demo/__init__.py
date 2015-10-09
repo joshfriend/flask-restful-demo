@@ -26,8 +26,8 @@ def create_app(config_object=DefaultConfig):
     :param config_object: The configuration object to use.
     '''
     app = Flask(__name__)
-    opbeat.init_app(app)
     app.config.from_object(config_object)
+    opbeat.init_app(app)
     register_extensions(app)
     register_blueprints(app)
     return app

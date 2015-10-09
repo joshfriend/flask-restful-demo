@@ -37,8 +37,8 @@ task_collection_fields = {
 
 class TaskResource(Resource):
     decorators = [
-        auth.login_required,
         self_only,
+        auth.login_required,
     ]
 
     @marshal_with(task_fields)
@@ -72,8 +72,8 @@ class TaskResource(Resource):
 
 class TaskCollectionResource(Resource):
     decorators = [
-        auth.login_required,
         self_only,
+        auth.login_required,
     ]
 
     @marshal_with(task_collection_fields)

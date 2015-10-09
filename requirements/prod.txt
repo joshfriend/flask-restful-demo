@@ -21,4 +21,4 @@ gunicorn>=17.5
 Flask-HTTPAuth
 
 # Monitoring
-opbeat[flask]
+opbeat[flask]==3.1.1
