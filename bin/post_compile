@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-echo "POST COMPILE"
+echo "-----> Running migrations..."
+
+python manage.py db upgrade
