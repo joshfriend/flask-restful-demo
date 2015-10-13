@@ -8,6 +8,6 @@ puts-step() {
   echo "-----> $@"
 }
 
-puts-step "-----> Running migrations..."
+puts-step "Running migrations..."
 
 python manage.py db upgrade 2>&1 | indent
