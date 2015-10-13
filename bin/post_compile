@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+indent() {
+  sed "s/^/       /"
+}
+
 echo "-----> Running migrations..."
 
-python manage.py db upgrade
+python manage.py db upgrade 2>&1 | indent
