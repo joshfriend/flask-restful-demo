@@ -1,0 +1,22 @@
+{
+  "name":"flask-restful-demo",
+  "scripts":{},
+  "env":{
+    "FLASK_ENV":{
+      "required":true
+    },
+    "OPBEAT_APP_ID":{
+      "required":true
+    },
+    "OPBEAT_ORG_ID":{
+      "required":true
+    },
+    "OPBEAT_SECRET_TOKEN":{
+      "required":true
+    }
+  },
+  "addons":[
+    "papertrail",
+    "heroku-postgresql"
+  ]
+}
