@@ -16,6 +16,7 @@ Flask-Migrate
 
 # Deployment
 gunicorn>=17.5
+gevent
 
 # Auth
 Flask-HTTPAuth
