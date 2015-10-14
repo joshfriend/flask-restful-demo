@@ -57,3 +57,6 @@ target/
 
 # SQLite databases
 *.db
+
+# Procfile runner config file
+.env

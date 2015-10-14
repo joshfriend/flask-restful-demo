@@ -46,6 +46,9 @@ PYLINT := $(BIN)/pylint
 PYTEST := "$(BIN)/py.test"
 COVERAGE := $(BIN)/coverage
 ACTIVATE := $(BIN)/activate
+HONCHO := . $(ACTIVATE); $(BIN)/honcho
+
+HONCHO_CONFIG := .env
 
 # Flags for PHONY targets
 DEPENDS := $(ENV)/depends
@@ -113,9 +116,18 @@ tests: depends
 
 # Development server #########################################################
 
+define HONCHO_CONFIG_CONTENTS
+GUNICORN_RELOAD=true
+GUNICORN_WORKER_CLASS=gevent
+endef
+
+export HONCHO_CONFIG_CONTENTS
+$(HONCHO_CONFIG):
+    echo "$$HONCHO_CONFIG_CONTENTS" > $@
+
 .PHONY: serve
-serve: depends
-	. $(ACTIVATE); $(BIN)/honcho start
+serve: depends $(HONCHO_CONFIG)
+    $(HONCHO) start -e $(HONCHO_CONFIG)
 
 # Database Migrations ########################################################
 
