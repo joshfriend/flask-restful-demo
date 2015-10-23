@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+indent() {
+  sed "s/^/       /"
+}
+
+puts-step() {
+  echo "-----> $@"
+}
+
+puts-step "Running migrations..."
+
+python manage.py db upgrade 2>&1 | indent
