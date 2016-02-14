@@ -11,7 +11,7 @@ webtest
 # Style checkers/linters
 flake8
 pep8
-pep257
+pydocstyle
 pylint
 
 # Management script
