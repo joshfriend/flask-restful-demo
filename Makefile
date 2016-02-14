@@ -9,32 +9,12 @@ SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 REQUIREMENTS_DEV := requirements/dev.txt
 REQUIREMENTS_PROD := requirements/prod.txt
 
-# System paths (automatically detected from the system Python)
-PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
-ifneq ($(findstring win32, $(PLATFORM)), )
-	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
-	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
-	SYS_VIRTUALENV := $(SYS_PYTHON_DIR)\\Scripts\\virtualenv.exe
-	# https://bugs.launchpad.net/virtualenv/+bug/449537
-	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
-else
-	SYS_PYTHON := python$(PYTHON_MAJOR)
-	SYS_VIRTUALENV := virtualenv
-endif
+SYS_PYTHON := python$(PYTHON_MAJOR).$(PYTHON_MINOR)
+SYS_VIRTUALENV := virtualenv
 
 # virtualenv paths (automatically detected from the system Python)
 ENV := env
-ifneq ($(findstring win32, $(PLATFORM)), )
-	BIN := $(ENV)/Scripts
-	OPEN := cmd /c start
-else
-	BIN := $(ENV)/bin
-	ifneq ($(findstring cygwin, $(PLATFORM)), )
-		OPEN := cygstart
-	else
-		OPEN := open
-	endif
-endif
+BIN := $(ENV)/bin
 
 # virtualenv executables
 PYTHON := $(BIN)/python
@@ -123,11 +103,11 @@ endef
 
 export HONCHO_CONFIG_CONTENTS
 $(HONCHO_CONFIG):
-    echo "$$HONCHO_CONFIG_CONTENTS" > $@
+	echo "$$HONCHO_CONFIG_CONTENTS" > $@
 
 .PHONY: serve
 serve: depends $(HONCHO_CONFIG)
-    $(HONCHO) start -e $(HONCHO_CONFIG)
+	$(HONCHO) start -e $(HONCHO_CONFIG)
 
 # Database Migrations ########################################################
 
