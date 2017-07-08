@@ -4,13 +4,13 @@ in __init__.py
 """
 
 
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
-from flask.ext.migrate import Migrate
+from flask_migrate import Migrate
 migrate = Migrate()
 
-from flask.ext.httpauth import HTTPBasicAuth
+from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
 
 from opbeat.contrib.flask import Opbeat
