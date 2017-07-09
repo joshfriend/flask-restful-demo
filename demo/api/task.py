@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask import abort
-from flask.ext.restful import Resource, reqparse, marshal_with, fields
+from flask_restful import Resource, reqparse, marshal_with, fields
 
 from demo.api import api, meta_fields
 from demo.api.auth import self_only
